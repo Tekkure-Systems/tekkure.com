@@ -1,11 +1,10 @@
 ---
 import { ViewTransitions } from "astro:transitions"
-import Tekkure_logo from "../assets/logos/tekkure_profile_light.jpg"
+import Tekkure_logo from "../assets/logos/tekkure_profile_light.svg"
 import '/src/styles/global.css';
-import { Image } from 'astro:assets';
 const currentYear = new Date().getFullYear();
 ---
-<html lang="en">
+<html lang="en" class="min-h-full bg-[color:var(--color-primaryBackground-light)] font-[Poppins] text-[color:var(--color-primaryText-light)]">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -19,27 +18,29 @@ const currentYear = new Date().getFullYear();
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 		<ViewTransitions/>
 	</head>
-	<div class="content-wrapper">
+	<div class="flex flex-col min-h-full">
 		<header>
-			<div class="navbar">
-				<div class="nav_left">
-					<a href="/proyectos" class="text_color_dark text_size_big text_weight_bold decoration-n">Proyectos</a>
-					<a href="/nosotros" class="text_color_dark text_size_big text_weight_bold">Nosotros</a>
+			<div class="flex items-center justify-center px-[2.5vw] h-[4.06rem] relative max-w-[25vw] w-[80%] mx-auto navbar">
+				<div class="flex items-center absolute justify-between gap-[1.875rem] right-[60%] nav_left">
+					<a href="/proyectos" class="text-primary text-lg font-bold no-underline">Proyectos</a>
+					<a href="/nosotros" class="text-primary text-lg font-bold">Nosotros</a>
 				</div>
-				<div class="logo_navbar">
+				<div class="absolute left-1/2 -translate-x-1/2 logo_navbar">
 					<a href="/">
-						<img src="/dist/img/tekkure_logo.svg" width="50px" alt="Imagen">
+						<Tekkure_logo width="50px"/>
 					</a>
 				</div>
-				<div class="nav_right">
-					<a href="/servicios" class="text_color_dark text_size_big text_weight_bold">Servicios</a>
-					<a href="/contacto" class="text_color_dark text_size_big text_weight_bold">Contacto</a>
+				<div class="flex items-center absolute justify-between gap-[1.875rem] left-[60%] nav_right">
+					<a href="/servicios" class="text-primary font-bold text-lg">Servicios</a>
+					<a href="/contacto" class="text-primary font-bold text-lg">Contacto</a>
 				</div>
 			</div>
 		</header>
-		<main><slot /></main>
-		<footer>
-			<p class="text_weight_bold text_color_dark text_size_medium">
+		<main class="flex-grow p-6 overflow-auto">
+			<slot />
+		</main>
+		<footer class="bg-[color:var(--color-primaryBackground-light)] text-center pb-7.5 h-5 relative">
+			<p class="font-bold text-primary text-base">
 				Tekkure &copy; <span>{currentYear}</span>
 			</p>
 		</footer>
@@ -47,138 +48,21 @@ const currentYear = new Date().getFullYear();
 </html>
 
 <style>
-	/* Ajustes generales */
-	html, body {
-		font-family: "Poppins", serif;
-		background-color: #f4f4f4;
-		color: #333;
-		height: 100%;
-		margin: 0;
-	}
-
-	body {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-	}
-a{
-	text-decoration: none;
+@media screen and (max-width: 48rem) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 0.625rem;
+  }
+  .nav_left, .nav_right {
+    position: static;
+    justify-content: center;
+    gap: 0.9375rem;
+  }
+  .logo_navbar {
+    position: static;
+    transform: none;
+    margin-bottom: 0.625rem;
+  }
 }
-	.content-wrapper {
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-	}
-
-	/* Contenedor de contenido principal */
-	main {
-		flex-grow: 1; /* Esto asegura que el main ocupe el espacio restante */
-		padding: 1.5rem;
-		overflow: auto;
-	}
-
-	/* Pie de página */
-	footer {
-		background-color: #f4f4f4;
-		text-align: center;
-		padding-bottom: 1.875rem;
-		height: 1.25rem;
-		position: relative;
-	}
-
-	/* Barra de navegación */
-	.navbar {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.625rem 2.5vw;
-		height: 4.06rem;
-		position: relative;
-		max-width: 25vw;
-		width: 80%;
-		margin: auto;
-	}
-
-	.logo_navbar {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	.nav_left, .nav_right {
-		display: flex;
-		align-items: center;
-		position: absolute;
-		justify-content: space-between;
-		gap: 1.875rem;
-	}
-
-	.nav_left {
-		right: 60%;
-	}
-
-	.nav_right {
-		left: 60%;
-	}
-
-	/* Estilos para texto */
-	.text_size_big {
-		font-size: 1.125rem;
-	}
-	.text_size_medium {
-		font-size: 0.9375rem;
-	}
-	.text_size_small {
-		font-size: 0.8125rem;
-	}
-	.text_weight_bold {
-		font-weight: 700;
-	}
-	.text_weight_medium {
-		font-weight: 500;
-	}
-	.text_weight_light {
-		font-weight: 300;
-	}
-	.text_color_dark {
-		color: #333;
-	}
-	.text_color_light {
-		color: #f4f4f4;
-	}
-	.text_color_primary {
-		color: #0066ff;
-	}
-
-	/* Diseño responsive */
-	@media screen and (max-width: 48rem) { /* 768px ≈ 48rem */
-		.navbar {
-			flex-direction: column;
-			height: auto;
-			padding: 0.625rem;
-		}
-		.nav_left, .nav_right {
-			position: static;
-			justify-content: center;
-			gap: 0.9375rem;
-		}
-		.logo_navbar {
-			position: static;
-			transform: none;
-			margin-bottom: 0.625rem;
-		}
-	}
-
-	/* Elementos */
-	.button {
-		display: inline-block;
-		padding: 10px 20px;
-		background-color: #007bff;
-		color: white;
-		text-align: center;
-		border: none;
-		border-radius: 25px;
-		text-decoration: none;
-		cursor: pointer;
-	}
 </style>
